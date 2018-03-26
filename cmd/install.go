@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"os"
 	"bufio"
 	"github.com/fatih/color"
+	"os"
 	"os/exec"
 )
 

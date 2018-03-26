@@ -8,7 +8,7 @@ import (
 func Test_repo(t *testing.T) {
 	srcPath := getSrcPathFromEnv()
 
-	cmd := &gitDir{path.Join(srcPath, "github.com/sawadashota/gocmd")}
+	cmd := &commandDir{path.Join(srcPath, "github.com/sawadashota/gocmd")}
 	if cmd.repo() != "github.com/sawadashota/gocmd" {
 		t.Errorf("repo should be \"github.com/sawadashota/gocmd\". Actual: %v\n", cmd.repo())
 	}
@@ -40,7 +40,7 @@ func Test_goCommand(t *testing.T) {
 	}
 }
 
-func hasRepo(commands []gitDir) bool {
+func hasRepo(commands []commandDir) bool {
 	for _, command := range commands {
 		if command.repo() == "github.com/sawadashota/gocmd" {
 			return true

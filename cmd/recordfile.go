@@ -8,8 +8,7 @@ import (
 
 const RecordFileName = ".gocmd"
 
-func recordFile(gitDirs *[]gitDir, targetDir string) {
-
+func recordFile(gitDirs *[]commandDir, targetDir string) {
 	file, err := os.OpenFile(recordFilePath(targetDir), os.O_WRONLY|os.O_CREATE, 0666)
 
 	if err != nil {

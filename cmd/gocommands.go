@@ -7,13 +7,13 @@ import (
 	"regexp"
 )
 
-type gitDir struct {
+type commandDir struct {
 	path string
 }
 
-func (g *gitDir) repo() string {
+func (c *commandDir) repo() string {
 	r := regexp.MustCompile(`src\/(.+)$`)
-	matches := r.FindStringSubmatch(g.path)
+	matches := r.FindStringSubmatch(c.path)
 
 	if len(matches) <= 1 {
 		log.Fatal("Cannot read repository name from path")
@@ -33,8 +33,8 @@ func basename(path string) string {
 	return matches[1]
 }
 
-func goCommands(srcPath string, binPath string) *[]gitDir {
-	var gitDirs []gitDir
+func goCommands(srcPath string, binPath string) *[]commandDir {
+	var commandDirs []commandDir
 
 	repoPaths, err := reposioty.Get(srcPath)
 	binNames := bins(binPath)
@@ -44,12 +44,14 @@ func goCommands(srcPath string, binPath string) *[]gitDir {
 	}
 
 	for _, repoPath := range repoPaths {
-		if inArray(basename(repoPath), &binNames) {
-			gitDirs = append(gitDirs, gitDir{path: repoPath})
+		for _, mainDir := range mainDirs(repoPath) {
+			if inArray(basename(mainDir), &binNames) {
+				commandDirs = append(commandDirs, commandDir{path: mainDir})
+			}
 		}
 	}
 
-	return &gitDirs
+	return &commandDirs
 }
 
 func bins(binPath string) []string {

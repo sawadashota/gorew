@@ -82,7 +82,7 @@ func Commands() *cobra.Command {
 
 	// Flags for init
 	InitCmd.Flags().StringVarP(&srcPath, "srcPath", "s", "", "GOPATH (default: $GOPATH/src)")
-	InitCmd.Flags().StringVarP(&binPath, "binPath", "b", "", "Bin path for golang gitDir (default: $GOPATH/bin)")
+	InitCmd.Flags().StringVarP(&binPath, "binPath", "b", "", "Bin path for golang commandDir (default: $GOPATH/bin)")
 	InitCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Path for save .gocmd (default: $HOME)")
 
 	// Flags for install
