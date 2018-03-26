@@ -19,7 +19,7 @@ var (
 
 	InitCmd = &cobra.Command{
 		Use:   "init",
-		Short: "",
+		Short: "Save all golang cli",
 		PreRun: func(cmd *cobra.Command, args []string) {
 			if srcPath == "" {
 				srcPath = getSrcPathFromEnv()
@@ -50,6 +50,31 @@ var (
 			recordFile(gitDirs, dotGoCmdDir)
 		},
 	}
+
+	InstallCmd = &cobra.Command{
+		Use:   "install",
+		Short: "Install golang cli from .gocmd",
+		PreRun: func(cmd *cobra.Command, args []string) {
+			if dotGoCmdDir == "" {
+				var err error
+				dotGoCmdDir, err = homedir.Dir()
+
+				if err != nil {
+					panic(err)
+				}
+			}
+
+			if errors := existsDir(dotGoCmdDir); len(errors) > 0 {
+				for _, err := range errors {
+					color.Red(err.Error())
+				}
+				os.Exit(1)
+			}
+		},
+		Run: func(cmd *cobra.Command, args []string) {
+			install(dotGoCmdDir)
+		},
+	}
 )
 
 func Commands() *cobra.Command {
@@ -60,7 +85,10 @@ func Commands() *cobra.Command {
 	InitCmd.Flags().StringVarP(&binPath, "binPath", "b", "", "Bin path for golang gitDir (default: $GOPATH/bin)")
 	InitCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Path for save .gocmd (default: $HOME)")
 
-	commands.AddCommand(InitCmd)
+	// Flags for install
+	InstallCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Directory to .gocmd (default: $HOME)")
+
+	commands.AddCommand(InitCmd, InstallCmd)
 
 	return commands
 }

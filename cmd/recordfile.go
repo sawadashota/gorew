@@ -9,9 +9,8 @@ import (
 const RecordFileName = ".gocmd"
 
 func recordFile(gitDirs *[]gitDir, targetDir string) {
-	recordFilePath := path.Join(targetDir, RecordFileName)
 
-	file, err := os.OpenFile(recordFilePath, os.O_WRONLY|os.O_CREATE, 0666)
+	file, err := os.OpenFile(recordFilePath(targetDir), os.O_WRONLY|os.O_CREATE, 0666)
 
 	if err != nil {
 		panic(err)
@@ -21,4 +20,8 @@ func recordFile(gitDirs *[]gitDir, targetDir string) {
 	for _, gitDir := range *gitDirs {
 		fmt.Fprintln(file, gitDir.repo())
 	}
+}
+
+func recordFilePath(targetDir string) string {
+	return path.Join(targetDir, RecordFileName)
 }
