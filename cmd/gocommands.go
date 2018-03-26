@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"regexp"
+	"sync"
+	"runtime"
 )
 
 type commandDir struct {
@@ -43,14 +45,28 @@ func goCommands(srcPath string, binPath string) *[]commandDir {
 		panic(err)
 	}
 
-	for _, repoPath := range repoPaths {
-		for _, mainDir := range mainDirs(repoPath) {
-			if inArray(basename(mainDir), &binNames) {
-				commandDirs = append(commandDirs, commandDir{path: mainDir})
-			}
-		}
-	}
+	var wg sync.WaitGroup
+	cpus := runtime.NumCPU()
+	runtime.GOMAXPROCS(cpus)
+	ch := make(chan []commandDir, cpus)
 
+	for _, repoPath := range repoPaths {
+		wg.Add(1)
+
+		go func() {
+			defer wg.Done()
+
+			var commandDirs []commandDir
+			for _, mainDir := range mainDirs(repoPath) {
+				if inArray(basename(mainDir), &binNames) {
+					commandDirs = append(commandDirs, commandDir{path: mainDir})
+				}
+			}
+			ch <- commandDirs
+		}()
+		commandDirs = append(commandDirs, <-ch...)
+	}
+	wg.Wait()
 	return &commandDirs
 }
 
