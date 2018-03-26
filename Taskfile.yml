@@ -1,0 +1,11 @@
+# github.com/go-task/task
+
+version: '2'
+
+tasks:
+  default:
+    cmds:
+      - go run main.go
+  fmt:
+    cmds:
+      - go fmt ./...
