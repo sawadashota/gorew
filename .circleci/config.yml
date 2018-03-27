@@ -7,8 +7,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dep
+          command: go get -u github.com/golang/dep/cmd/dep
+      - run:
           name: Install Dependencies
-          command: go get -v -t -d ./...
+          command: dep ensure -v
       - run:
           name: Create binary
           command: go install
@@ -27,9 +30,6 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Install dep
-          command: go get -u github.com/golang/dep/cmd/dep
       - run:
           name: Install goreleaser
           command: go get -u github.com/goreleaser/goreleaser
