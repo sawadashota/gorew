@@ -14,8 +14,6 @@ archive:
     amd64: 64-bit
     darwin: macOS
     linux: Tux
-  files:
-    - gocmd.licence.txt
 
 brew:
   # Name of the recipe
