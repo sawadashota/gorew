@@ -15,3 +15,5 @@ jobs:
       - run:
           name: Test
           command: go test -v ./...
+      - store_artifacts:
+          path: /go/src/github.com/sawadashota/gocmd/pprof

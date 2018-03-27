@@ -7,3 +7,8 @@ tasks:
   fmt:
     cmds:
       - go fmt ./...
+  pprof:
+    cmds:
+      - go tool pprof -http localhost:{{.PORT}} {{.FILE}}
+    vars:
+      PORT: 8080

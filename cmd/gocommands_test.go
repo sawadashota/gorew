@@ -3,6 +3,7 @@ package cmd
 import (
 	"path"
 	"testing"
+	"github.com/pkg/profile"
 )
 
 func Test_repo(t *testing.T) {
@@ -26,6 +27,8 @@ func Test_basename(t *testing.T) {
 }
 
 func Test_goCommand(t *testing.T) {
+	defer profile.Start(profile.CPUProfile, profile.ProfilePath("../pprof/gocomands"), profile.NoShutdownHook).Stop()
+
 	srcPath := getSrcPathFromEnv()
 	binPath := getBinPathFromEnv()
 

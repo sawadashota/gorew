@@ -3,9 +3,12 @@ package cmd
 import (
 	"path"
 	"testing"
+	"github.com/pkg/profile"
 )
 
 func TestMainDirs(t *testing.T) {
+	defer profile.Start(profile.CPUProfile, profile.ProfilePath("../pprof/maindir"), profile.NoShutdownHook).Stop()
+
 	gitRoot := path.Join(getSrcPathFromEnv(), "github.com/sawadashota/gocmd")
 
 	dirs := mainDirs(gitRoot)
