@@ -43,7 +43,7 @@ workflows:
               only: /.*/
       - release:
           requires:
-            - test
+            - build
           filters:
             tags:
               only: /.*/
