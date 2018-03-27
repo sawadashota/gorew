@@ -1,4 +1,4 @@
-go-cmd
+gocmd
 ===
 
 Golang cli management tool.
