@@ -14,7 +14,7 @@ var (
 	dotGoCmdDir string
 
 	RootCmd = &cobra.Command{
-		Use: "cmd",
+		Use: "gocmd",
 	}
 
 	InitCmd = &cobra.Command{
