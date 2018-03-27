@@ -48,6 +48,7 @@ var (
 		Run: func(cmd *cobra.Command, args []string) {
 			gitDirs := goCommands(srcPath, binPath)
 			recordFile(gitDirs, dotGoCmdDir)
+			color.Green("created \"%v\" successfully!", path.Join(dotGoCmdDir, RecordFileName))
 		},
 	}
 

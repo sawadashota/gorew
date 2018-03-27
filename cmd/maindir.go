@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func mainDirs(gitRoot string) []string {
+func mainDirs(gitRoot string) *[]string {
 	files, err := ioutil.ReadDir(gitRoot)
 	if err != nil {
 		panic(err)
@@ -33,10 +33,10 @@ func mainDirs(gitRoot string) []string {
 			continue
 		}
 
-		paths = append(paths, mainDirs(abs)...)
+		paths = append(paths, *mainDirs(abs)...)
 	}
 
-	return paths
+	return &paths
 }
 
 func hasMainGo(dirPath string) bool {

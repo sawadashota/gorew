@@ -5,8 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"regexp"
-	"sync"
-	"runtime"
 )
 
 type commandDir struct {
@@ -45,31 +43,18 @@ func goCommands(srcPath string, binPath string) *[]commandDir {
 		panic(err)
 	}
 
-	var wg sync.WaitGroup
-	cpus := runtime.NumCPU()
-	ch := make(chan []commandDir, cpus)
-
 	for _, repoPath := range repoPaths {
-		wg.Add(1)
-
-		go func() {
-			defer wg.Done()
-
-			var commandDirs []commandDir
-			for _, mainDir := range mainDirs(repoPath) {
-				if inArray(basename(mainDir), &binNames) {
-					commandDirs = append(commandDirs, commandDir{path: mainDir})
-				}
+		for _, mainDir := range *mainDirs(repoPath) {
+			if inArray(basename(mainDir), binNames) {
+				commandDirs = append(commandDirs, commandDir{path: mainDir})
 			}
-			ch <- commandDirs
-		}()
-		commandDirs = append(commandDirs, <-ch...)
+		}
 	}
-	wg.Wait()
+
 	return &commandDirs
 }
 
-func bins(binPath string) []string {
+func bins(binPath string) *[]string {
 	files, err := ioutil.ReadDir(binPath)
 
 	if err != nil {
@@ -83,7 +68,7 @@ func bins(binPath string) []string {
 		}
 	}
 
-	return bins
+	return &bins
 }
 
 func inArray(needle string, haystack *[]string) bool {
