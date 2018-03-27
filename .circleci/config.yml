@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test:
+  build:
     docker: &docker
       - image: circleci/golang:1.10.0
     working_directory: &working_directory /go/src/github.com/sawadashota/gocmd
@@ -37,11 +37,13 @@ workflows:
   version: 2
   default:
     jobs:
-      - test:
+      - build:
           filters:
             tags:
               only: /.*/
       - release:
+          requires:
+            - test
           filters:
             tags:
               only: /.*/
