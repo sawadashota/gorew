@@ -24,6 +24,13 @@ Installation
 ---
 
 ```bash
+brew tap sawadashota/homebrew-gocmd
+brew install gocmd
+```
+
+or
+
+```bash
 go get -u github.com/sawadashota/gocmd
 ```
 
