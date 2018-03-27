@@ -1,0 +1,79 @@
+builds:
+  - main: main.go
+    binary: gocmd
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - amd32
+# Archive customization
+archive:
+  format: tar.gz
+  replacements:
+    amd64: 64-bit
+    darwin: macOS
+    linux: Tux
+  files:
+    - gocmd.licence.txt
+
+brew:
+  # Name of the recipe
+  # Default to project name
+  name: gocmd
+
+  # Reporitory to push the tap to.
+  github:
+    owner: sawadashota
+    name: homebrew-gocmd
+
+  # Allows you to set a custom download strategy.
+  # Default is empty.
+  # download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
+
+  # Git author used to commit to the repository.
+  # Defaults are shown.
+  commit_author:
+    name: sawadashota
+    email: xiootas@gmail.com
+
+  # Folder inside the repository to put the formula.
+  # Default is the root folder.
+  folder: Formula
+
+  # Caveats for the user of your binary.
+  # Default is empty.
+  caveats: ""
+
+  # Your app's homepage.
+  # Default is empty.
+  homepage: ""
+
+  # Your app's description.
+  # Default is empty.
+  description: "Golang cli management tool"
+
+  # Setting this will prevent goreleaser to actually try to commit the updated
+  # formula - instead, the formula file will be stored on the dist folder only,
+  # leaving the responsibility of publishing it to the user.
+  # Default is false.
+  skip_upload: true
+
+  # Packages your package depends on.
+  dependencies: []
+
+  # Packages that conflict with your package.
+  conflicts: []
+  # Specify for packages that run as a service.
+  # Default is empty.
+  #plist: |
+
+  # So you can `brew test` your formula.
+  # Default is empty.
+  test: |
+    system "#{bin}/gocmd -h"
+
+  # Custom install script for brew.
+  # Default is 'bin.install "program"'.
+  install: |
+    bin.install "gocmd"
