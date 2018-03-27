@@ -28,6 +28,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Install dep
+          command: go get -u github.com/golang/dep/cmd/dep
+      - run:
           name: Install goreleaser
           command: go get -u github.com/goreleaser/goreleaser
       - run:
