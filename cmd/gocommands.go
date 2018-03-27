@@ -47,7 +47,6 @@ func goCommands(srcPath string, binPath string) *[]commandDir {
 
 	var wg sync.WaitGroup
 	cpus := runtime.NumCPU()
-	runtime.GOMAXPROCS(cpus)
 	ch := make(chan []commandDir, cpus)
 
 	for _, repoPath := range repoPaths {
