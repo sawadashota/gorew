@@ -6,5 +6,12 @@ jobs:
     working_directory: /go/src/github.com/sawadashota/gocmd
     steps:
       - checkout
-      - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      - run:
+        name: Install Dependencies
+        command: go get -v -t -d ./...
+      - run:
+        name: Create binary
+        command: go install
+      - run:
+        name: Test
+        command: go test -v ./...
