@@ -1,9 +1,9 @@
 version: 2
 jobs:
-  build:
-    docker:
+  test:
+    docker: &docker
       - image: circleci/golang:1.10.0
-    working_directory: /go/src/github.com/sawadashota/gocmd
+    working_directory: &working_directory /go/src/github.com/sawadashota/gocmd
     steps:
       - checkout
       - run:
@@ -17,3 +17,33 @@ jobs:
           command: go test -v ./...
       - store_artifacts:
           path: /go/src/github.com/sawadashota/gocmd/pprof
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  release:
+    docker: *docker
+    working_directory: *working_directory
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install goreleaser
+          command: go get -u github.com/goreleaser/goreleaser
+      - run:
+          name: Release
+          command: goreleaser
+workflows:
+  version: 2
+  default:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - release:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
