@@ -32,6 +32,12 @@
   revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
 
 [[projects]]
+  name = "github.com/pkg/profile"
+  packages = ["."]
+  revision = "5b67d428864e92711fcbd2f8629456121a56d91f"
+  version = "v1.2.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/sawadashota/reposioty"
   packages = ["."]
@@ -58,6 +64,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a7974d2ae697f718d733028d8c4eedd1bb22067b67870f84c6b85155fe8f003f"
+  inputs-digest = "52432616ebc29fc9b83779910c6bbbeca79da527a5f012d686403317519f20dd"
   solver-name = "gps-cdcl"
   solver-version = 1
