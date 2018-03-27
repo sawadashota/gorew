@@ -15,5 +15,11 @@ jobs:
       - run:
           name: Test
           command: go test -v ./...
+      - run:
+          name: Create svg from gocomands/cpu.pprof
+          run: go tool pprof -svg ./pprof/gocomands/cpu.pprof > ./pprof/gocomands/cpu.svg
+      - run:
+          name: Create svg from maindir/cpu.pprof
+          run: go tool pprof -svg ./pprof/maindir/cpu.pprof > ./pprof/maindir/cpu.svg
       - store_artifacts:
           path: /go/src/github.com/sawadashota/gocmd/pprof
