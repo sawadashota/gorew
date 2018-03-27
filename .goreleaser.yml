@@ -55,13 +55,14 @@ brew:
   # formula - instead, the formula file will be stored on the dist folder only,
   # leaving the responsibility of publishing it to the user.
   # Default is false.
-  skip_upload: true
+  skip_upload: false
 
   # Packages your package depends on.
   dependencies: []
 
   # Packages that conflict with your package.
   conflicts: []
+
   # Specify for packages that run as a service.
   # Default is empty.
   #plist: |
