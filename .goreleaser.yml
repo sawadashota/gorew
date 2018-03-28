@@ -24,10 +24,10 @@ brew:
   # Default to project name
   name: gocmd
 
-  # Reporitory to push the tap to.
+  # Repository to push the tap to.
   github:
     owner: sawadashota
-    name: homebrew-gocmd
+    name: homebrew-cheers
 
   # Allows you to set a custom download strategy.
   # Default is empty.
@@ -41,7 +41,7 @@ brew:
 
   # Folder inside the repository to put the formula.
   # Default is the root folder.
-  folder: Formula
+  # folder: Formula
 
   # Caveats for the user of your binary.
   # Default is empty.

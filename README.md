@@ -24,7 +24,7 @@ Installation
 ---
 
 ```bash
-brew tap sawadashota/homebrew-gocmd
+brew tap sawadashota/homebrew-cheers
 brew install gocmd
 ```
 
