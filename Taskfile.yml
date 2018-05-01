@@ -9,6 +9,10 @@ tasks:
     desc: Format go code
     cmds:
       - go fmt ./...
+  build:
+    desc: Build to bin
+    cmds:
+      - go build -o $GOPATH/bin/gocmd ./main.go
   pprof:
     desc: Serve pprof
     cmds:
