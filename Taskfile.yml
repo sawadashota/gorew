@@ -2,12 +2,15 @@ version: '2'
 
 tasks:
   test:
+    desc: Run tests
     cmds:
       - go test -v ./...
   fmt:
+    desc: Format go code
     cmds:
       - go fmt ./...
   pprof:
+    desc: Serve pprof
     cmds:
       - go tool pprof -http localhost:{{.PORT}} {{.FILE}}
     vars:
