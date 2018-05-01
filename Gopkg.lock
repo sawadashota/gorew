@@ -8,6 +8,18 @@
   version = "v1.6.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/hashicorp/errwrap"
+  packages = ["."]
+  revision = "7554cd9344cec97297fa6649b055a8c98c2a1e55"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/hashicorp/go-multierror"
+  packages = ["."]
+  revision = "b7773ae218740a7be65057fc60b366a49b538a44"
+
+[[projects]]
   name = "github.com/inconshreveable/mousetrap"
   packages = ["."]
   revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
@@ -38,6 +50,17 @@
   version = "v1.2.1"
 
 [[projects]]
+  name = "github.com/posener/complete"
+  packages = [
+    ".",
+    "cmd",
+    "cmd/install",
+    "match"
+  ]
+  revision = "98eb9847f27ba2008d380a32c98be474dea55bdf"
+  version = "v1.1.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/sawadashota/reposioty"
   packages = ["."]
@@ -64,6 +87,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "52432616ebc29fc9b83779910c6bbbeca79da527a5f012d686403317519f20dd"
+  inputs-digest = "35eb5b45d31615679af448ff979860c3f581e2de30b550a86d6a1a58fbb1e45f"
   solver-name = "gps-cdcl"
   solver-version = 1
