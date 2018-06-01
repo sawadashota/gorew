@@ -20,16 +20,17 @@ jobs:
           command: go test -v ./...
       - store_artifacts:
           path: /go/src/github.com/sawadashota/gocmd/pprof
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
   release:
     docker: *docker
     working_directory: *working_directory
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
+      - run:
+          name: Install dep
+          command: go get -u github.com/golang/dep/cmd/dep
+      - run:
+          name: Install Dependencies
+          command: dep ensure -v
       - run:
           name: Install goreleaser
           command: go get -u github.com/goreleaser/goreleaser
