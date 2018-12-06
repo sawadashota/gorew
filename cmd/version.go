@@ -11,6 +11,8 @@ import (
 var (
 	version string
 	gitHash string
+
+	TimeNow time.Time
 )
 
 var versionCmd = &cobra.Command{
@@ -19,7 +21,7 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("Version:	%s\n", version)
 		fmt.Printf("Git Hash:	%s\n", gitHash)
-		fmt.Printf("Build Time:	%s\n", time.Now().UTC().Format("2006-01-02 15:04:05 MST"))
+		fmt.Printf("Build Time:	%s\n", timeNow().UTC().Format("2006-01-02 15:04:05 MST"))
 	},
 }
 
@@ -37,4 +39,12 @@ func getStringEnv(key string, defaultValue string) string {
 		return defaultValue
 	}
 	return v
+}
+
+func timeNow() time.Time {
+	if &TimeNow != nil {
+		return TimeNow
+	}
+
+	return time.Now()
 }
