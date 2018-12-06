@@ -1,12 +1,17 @@
-version: 2
-jobs:
-  build:
-    docker: &docker
+version: 2.1
+
+executors:
+  golang-executor:
+    docker:
       - image: circleci/golang:1.11.2
     environment:
       GO111MODULE: "on"
       TEST_RESULTS: /tmp/test-results
-    working_directory: &working_directory /go/src/github.com/sawadashota/gocmd
+    working_directory: /go/src/github.com/sawadashota/gocmd
+
+jobs:
+  build:
+    executor: golang-executor
     steps:
       - checkout
       - restore_cache:
@@ -46,8 +51,7 @@ jobs:
       - store_test_results:
           path: /tmp/test-results
   release:
-    docker: *docker
-    working_directory: *working_directory
+    executor: golang-executor
     steps:
       - checkout
       - restore_cache:
