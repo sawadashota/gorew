@@ -1,39 +1,78 @@
-version: 2
-jobs:
-  build:
-    docker: &docker
-      - image: circleci/golang:1.10.0
-    working_directory: &working_directory /go/src/github.com/sawadashota/gocmd
+version: 2.1
+
+executors:
+  golang-executor:
+    docker:
+      - image: circleci/golang:1.11.2
+    environment:
+      GO111MODULE: "on"
+      TEST_RESULTS: /tmp/test-results
+    working_directory: /go/src/github.com/sawadashota/gocmd
+commands:
+  install-dependencies:
+    description: "install dependencies with using cache"
+    parameters:
+      with_go-junit-report:
+        type: boolean
+        default: false
+      with_goreleaser:
+        type: boolean
+        default: false
     steps:
-      - checkout
-      - run:
-          name: Install dep
-          command: go get -u github.com/golang/dep/cmd/dep
+      - restore_cache:
+          name: Restore go modules cache
+          keys:
+            - mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
       - run:
           name: Install Dependencies
-          command: dep ensure -v
+          command: go mod download
+      - when:
+          condition: << parameters.with_go-junit-report >>
+          steps:
+            - run: go get github.com/jstemmer/go-junit-report
+      - when:
+          condition: << parameters.with_goreleaser >>
+          steps:
+            - run: go get github.com/goreleaser/goreleaser
+      - save_cache:
+          name: Save go modules cache
+          key: mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
+          paths:
+            - /go/pkg/mod/cache
+
+jobs:
+  build:
+    executor: golang-executor
+    steps:
+      - checkout
+      - install-dependencies:
+          with_go-junit-report: true
       - run:
           name: Create binary
           command: go install
       - run:
           name: Test
-          command: go test -v ./...
+          command: go test -v -cover ./...
+      - run:
+          name: Run tests
+          command: |
+            mkdir -p ${TEST_RESULTS}
+            trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
+            go test -coverprofile ${TEST_RESULTS}/coverage.txt -v ./... | tee ${TEST_RESULTS}/go-test.out
+            go tool cover -html ${TEST_RESULTS}/coverage.txt -o ${TEST_RESULTS}/coverage.html
       - store_artifacts:
           path: /go/src/github.com/sawadashota/gocmd/pprof
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+      - store_test_results:
+          path: /tmp/test-results
   release:
-    docker: *docker
-    working_directory: *working_directory
+    executor: golang-executor
     steps:
       - checkout
-      - run:
-          name: Install dep
-          command: go get -u github.com/golang/dep/cmd/dep
-      - run:
-          name: Install Dependencies
-          command: dep ensure -v
-      - run:
-          name: Install goreleaser
-          command: go get -u github.com/goreleaser/goreleaser
+      - install-dependencies:
+          with_goreleaser: true
       - run:
           name: Release
           command: goreleaser
