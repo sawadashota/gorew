@@ -75,7 +75,7 @@ jobs:
           with_goreleaser: true
       - run:
           name: Release
-          command: goreleaser
+          command: VERSION=${CIRCLE_TAG} GIT_HASH=${CIRCLE_SHA1} goreleaser
 workflows:
   version: 2
   default:

@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	cmd.Commands().Execute()
+	_ = cmd.RootCmd.Execute()
 	completion.Run()
 }

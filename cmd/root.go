@@ -78,8 +78,8 @@ var (
 	}
 )
 
-func Commands() *cobra.Command {
-	commands := RootCmd
+
+func init() {
 
 	// Flags for init
 	InitCmd.Flags().StringVarP(&srcPath, "srcPath", "s", "", "GOPATH (default: $GOPATH/src)")
@@ -89,9 +89,7 @@ func Commands() *cobra.Command {
 	// Flags for install
 	InstallCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Directory to .gocmd (default: $HOME)")
 
-	commands.AddCommand(InitCmd, InstallCmd)
-
-	return commands
+	RootCmd.AddCommand(InitCmd, InstallCmd)
 }
 
 func getSrcPathFromEnv() string {
