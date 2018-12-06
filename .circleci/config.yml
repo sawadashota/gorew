@@ -76,9 +76,7 @@ jobs:
       - run:
           name: Release
           command: |
-            echo ${CIRCLE_TAG}
-            echo ${CIRCLE_SHA1}
-            VERSION=${CIRCLE_TAG} GIT_HASH=${CIRCLE_SHA1} goreleaser
+            VERSION=${CIRCLE_TAG} GIT_HASH=${CIRCLE_SHA1} DATE=$(date -u +"%Y-%m-%d %k:%M:%S UTC") goreleaser
 workflows:
   version: 2
   default:
