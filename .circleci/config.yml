@@ -8,12 +8,17 @@ executors:
       GO111MODULE: "on"
       TEST_RESULTS: /tmp/test-results
     working_directory: /go/src/github.com/sawadashota/gocmd
-
-jobs:
-  build:
-    executor: golang-executor
+commands:
+  install-dependencies:
+    description: "install dependencies with using cache"
+    parameters:
+      with_go-junit-report:
+        type: boolean
+        default: false
+      with_goreleaser:
+        type: boolean
+        default: false
     steps:
-      - checkout
       - restore_cache:
           name: Restore go modules cache
           keys:
@@ -21,15 +26,27 @@ jobs:
       - run:
           name: Install Dependencies
           command: go mod download
-      - run:
-          name: Install CLIs
-          command: |
-            go get github.com/jstemmer/go-junit-report
+      - when:
+          condition: << parameters.with_go-junit-report >>
+          steps:
+            - run: go get github.com/jstemmer/go-junit-report
+      - when:
+          condition: << parameters.with_goreleaser >>
+          steps:
+            - run: go get github.com/goreleaser/goreleaser
       - save_cache:
           name: Save go modules cache
           key: mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
           paths:
             - /go/pkg/mod/cache
+
+jobs:
+  build:
+    executor: golang-executor
+    steps:
+      - checkout
+      - install-dependencies:
+          with_go-junit-report: true
       - run:
           name: Create binary
           command: go install
@@ -54,21 +71,8 @@ jobs:
     executor: golang-executor
     steps:
       - checkout
-      - restore_cache:
-          name: Restore go modules cache
-          keys:
-            - mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
-      - run:
-          name: Install Dependencies
-          command: go mod download
-      - run:
-          name: Install goreleaser
-          command: go get -u github.com/goreleaser/goreleaser
-      - save_cache:
-          name: Save go modules cache
-          key: mod-{{ .Environment.COMMON_CACHE_KEY }}-{{ checksum "go.mod" }}
-          paths:
-            - /go/pkg/mod/cache
+      - install-dependencies:
+          with_goreleaser: true
       - run:
           name: Release
           command: goreleaser
