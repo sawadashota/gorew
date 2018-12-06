@@ -24,8 +24,8 @@ var versionCmd = &cobra.Command{
 }
 
 func init() {
-	version = getStringEnv("VERSION", "dev-master")
-	gitHash = getStringEnv("GIT_HASH", "undefined")
+	version = getStringEnv("CIRCLE_TAG", "dev-master")
+	gitHash = getStringEnv("CIRCLE_SHA1", "undefined")
 	RootCmd.AddCommand(versionCmd)
 }
 
