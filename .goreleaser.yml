@@ -1,6 +1,6 @@
 builds:
   - main: main.go
-    ldflags: -s -w -X "github.com/sawadashota/gocmd/cmd.version={{.Env.VERSION}}" -X "github.com/sawadashota/gocmd/cmd.commit={{.Env.GIT_HASH}}"
+    ldflags: -s -w -X "github.com/sawadashota/gocmd/cmd.version={{.Env.VERSION}}" -X "github.com/sawadashota/gocmd/cmd.commit={{.Env.GIT_HASH}}" -X "github.com/sawadashota/gocmd/cmd.date={{.Env.DATE}}"
     binary: gocmd
     goos:
       - darwin
