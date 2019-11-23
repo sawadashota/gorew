@@ -19,6 +19,6 @@ func TestMainDirs(t *testing.T) {
 	}
 
 	if (*dirs)[0] != gitRoot {
-		t.Errorf("mainDirs shouldf return  %v. Acutual: %v\n", gitRoot, (*dirs)[0])
+		t.Errorf("mainDirs should return  %v. Acutual: %v\n", gitRoot, (*dirs)[0])
 	}
 }
