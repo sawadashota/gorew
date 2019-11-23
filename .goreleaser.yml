@@ -1,7 +1,7 @@
 builds:
   - main: main.go
-    ldflags: -s -w -X "github.com/sawadashota/gocmd/cmd.version={{.Env.VERSION}}" -X "github.com/sawadashota/gocmd/cmd.commit={{.Env.GIT_HASH}}" -X "github.com/sawadashota/gocmd/cmd.date={{.Env.DATE}}"
-    binary: gocmd
+    ldflags: -s -w -X "github.com/sawadashota/gorew/cmd.version={{.Env.VERSION}}" -X "github.com/sawadashota/gorew/cmd.commit={{.Env.GIT_HASH}}" -X "github.com/sawadashota/gorew/cmd.date={{.Env.DATE}}"
+    binary: gorew
     goos:
       - darwin
       - linux
@@ -23,7 +23,7 @@ archive:
 brew:
   # Name of the recipe
   # Default to project name
-  name: gocmd
+  name: gorew
 
   # Repository to push the tap to.
   github:
@@ -75,9 +75,9 @@ brew:
   # So you can `brew test` your formula.
   # Default is empty.
   test: |
-    system "#{bin}/gocmd -h"
+    system "#{bin}/gorew -h"
 
   # Custom install script for brew.
   # Default is 'bin.install "program"'.
   install: |
-    bin.install "gocmd"
+    bin.install "gorew"

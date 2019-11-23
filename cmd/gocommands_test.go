@@ -3,15 +3,16 @@ package cmd
 import (
 	"path"
 	"testing"
+
 	"github.com/pkg/profile"
 )
 
 func Test_repo(t *testing.T) {
 	srcPath := getSrcPathFromEnv()
 
-	cmd := &commandDir{path.Join(srcPath, "github.com/sawadashota/gocmd")}
-	if cmd.repo() != "github.com/sawadashota/gocmd" {
-		t.Errorf("repo should be \"github.com/sawadashota/gocmd\". Actual: %v\n", cmd.repo())
+	cmd := &commandDir{path.Join(srcPath, "github.com/sawadashota/gorew")}
+	if cmd.repo() != "github.com/sawadashota/gorew" {
+		t.Errorf("repo should be \"github.com/sawadashota/gorew\". Actual: %v\n", cmd.repo())
 	}
 
 }
@@ -19,10 +20,10 @@ func Test_repo(t *testing.T) {
 func Test_basename(t *testing.T) {
 	srcPath := getSrcPathFromEnv()
 
-	repoPath := path.Join(srcPath, "github.com/sawadashota/gocmd")
+	repoPath := path.Join(srcPath, "github.com/sawadashota/gorew")
 
-	if basename(repoPath) != "gocmd" {
-		t.Errorf("Basename should be \"gocmd\". Actual: %v\n", basename(repoPath))
+	if basename(repoPath) != "gorew" {
+		t.Errorf("Basename should be \"gorew\". Actual: %v\n", basename(repoPath))
 	}
 }
 
@@ -39,13 +40,13 @@ func Test_goCommand(t *testing.T) {
 	}
 
 	if !hasRepo(*commands) {
-		t.Error("goCommand() should have \"github.com/sawadashota/gocmd\"")
+		t.Error("goCommand() should have \"github.com/sawadashota/gorew\"")
 	}
 }
 
 func hasRepo(commands []commandDir) bool {
 	for _, command := range commands {
-		if command.repo() == "github.com/sawadashota/gocmd" {
+		if command.repo() == "github.com/sawadashota/gorew" {
 			return true
 		}
 	}

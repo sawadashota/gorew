@@ -1,4 +1,4 @@
-gocmd
+gorew
 ===
 
 Golang cli management tool.
@@ -8,16 +8,16 @@ Usage
 
 ### Initialization
 
-Save golang cli to `~/.gocmd` by compared `$GOPATH/bin/` and under `$GOPATH/src`.
+Save golang cli to `~/.gorew` by compared `$GOPATH/bin/` and under `$GOPATH/src`.
 
 ```bash
-gocmd init [-b PATH_TO_BIN_IN_GOLANG] [-s PATH_TO_GO_SRC] [-f PATH_TO_SAVE_.gocmd]
+gorew init [-b PATH_TO_BIN_IN_GOLANG] [-s PATH_TO_GO_SRC] [-f PATH_TO_SAVE_.gorew]
 ```
 
 ### Install Cli
 
 ```bash
-gocmd install [-f PATH_TO_.gocmd]
+gorew install [-f PATH_TO_.gorew]
 ```
 
 Installation
@@ -25,13 +25,13 @@ Installation
 
 ```bash
 brew tap sawadashota/homebrew-cheers
-brew install gocmd
+brew install gorew
 ```
 
 or
 
 ```bash
-go get -u github.com/sawadashota/gocmd
+go get -u github.com/sawadashota/gorew
 ```
 
 License

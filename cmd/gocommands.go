@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	"github.com/sawadashota/reposioty"
 	"io/ioutil"
 	"log"
 	"regexp"
+
+	"github.com/sawadashota/reposioty"
 )
 
 type commandDir struct {

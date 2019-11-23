@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/sawadashota/gocmd/cmd"
-	"github.com/sawadashota/gocmd/completion"
+	"github.com/sawadashota/gorew/cmd"
+	"github.com/sawadashota/gorew/completion"
 )
 
 func main() {

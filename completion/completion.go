@@ -3,7 +3,7 @@ package completion
 import "github.com/posener/complete"
 
 func Run() {
-	gocmd := complete.Command{
+	gorew := complete.Command{
 		Sub: complete.Commands{
 			"install": complete.Command{
 				Flags: complete.Flags{
@@ -30,5 +30,5 @@ func Run() {
 			"-h":     complete.PredictNothing,
 		},
 	}
-	complete.New("gocmd", gocmd).Run()
+	complete.New("gorew", gorew).Run()
 }

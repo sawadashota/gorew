@@ -3,11 +3,10 @@ version: 2.1
 executors:
   golang-executor:
     docker:
-      - image: circleci/golang:1.11.2
+      - image: circleci/golang:1.13
     environment:
-      GO111MODULE: "on"
       TEST_RESULTS: /tmp/test-results
-    working_directory: /go/src/github.com/sawadashota/gocmd
+    working_directory: /go/src/github.com/sawadashota/gorew
 commands:
   install-dependencies:
     description: "install dependencies with using cache"
@@ -61,7 +60,7 @@ jobs:
             go test -coverprofile ${TEST_RESULTS}/coverage.txt -v ./... | tee ${TEST_RESULTS}/go-test.out
             go tool cover -html ${TEST_RESULTS}/coverage.txt -o ${TEST_RESULTS}/coverage.html
       - store_artifacts:
-          path: /go/src/github.com/sawadashota/gocmd/pprof
+          path: /go/src/github.com/sawadashota/gorew/pprof
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
@@ -78,7 +77,6 @@ jobs:
           command: |
             VERSION=${CIRCLE_TAG} GIT_HASH=${CIRCLE_SHA1} DATE=$(date -u +"%Y-%m-%d %k:%M:%S UTC") goreleaser
 workflows:
-  version: 2
   default:
     jobs:
       - build

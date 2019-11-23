@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"bufio"
-	"github.com/fatih/color"
 	"os"
 	"os/exec"
+
+	"github.com/fatih/color"
 )
 
 type repository struct {

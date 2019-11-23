@@ -6,7 +6,7 @@ import (
 	"path"
 )
 
-const RecordFileName = ".gocmd"
+const RecordFileName = ".gorew"
 
 func recordFile(gitDirs *[]commandDir, targetDir string) {
 	file, err := os.OpenFile(recordFilePath(targetDir), os.O_WRONLY|os.O_CREATE, 0666)

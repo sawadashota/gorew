@@ -12,7 +12,7 @@ tasks:
   build:
     desc: Build to bin
     cmds:
-      - go build -o $GOPATH/bin/gocmd ./main.go
+      - go build -o $GOPATH/bin/gorew ./main.go
   pprof:
     desc: Serve pprof
     cmds:

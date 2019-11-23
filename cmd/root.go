@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"os"
+	"path"
+
 	"github.com/fatih/color"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
-	"os"
-	"path"
 )
 
 var (
@@ -14,7 +15,7 @@ var (
 	dotGoCmdDir string
 
 	RootCmd = &cobra.Command{
-		Use: "gocmd",
+		Use: "gorew",
 	}
 
 	InitCmd = &cobra.Command{
@@ -54,7 +55,7 @@ var (
 
 	InstallCmd = &cobra.Command{
 		Use:   "install",
-		Short: "Install golang cli from .gocmd",
+		Short: "Install golang cli from .gorew",
 		PreRun: func(cmd *cobra.Command, args []string) {
 			if dotGoCmdDir == "" {
 				var err error
@@ -78,16 +79,15 @@ var (
 	}
 )
 
-
 func init() {
 
 	// Flags for init
 	InitCmd.Flags().StringVarP(&srcPath, "srcPath", "s", "", "GOPATH (default: $GOPATH/src)")
 	InitCmd.Flags().StringVarP(&binPath, "binPath", "b", "", "Bin path for golang commandDir (default: $GOPATH/bin)")
-	InitCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Path for save .gocmd (default: $HOME)")
+	InitCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Path for save .gorew (default: $HOME)")
 
 	// Flags for install
-	InstallCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Directory to .gocmd (default: $HOME)")
+	InstallCmd.Flags().StringVarP(&dotGoCmdDir, "file", "f", "", "Directory to .gorew (default: $HOME)")
 
 	RootCmd.AddCommand(InitCmd, InstallCmd)
 }
