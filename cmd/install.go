@@ -27,8 +27,8 @@ func execInstall(repositories []repository) *installResult {
 	var result installResult
 
 	for _, repo := range repositories {
-		color.Green("go get -u %v", repo.name)
-		err := exec.Command("go", "get", "-u", repo.name).Run()
+		color.Green("GO111MODULE=off go get %v", repo.name)
+		err := exec.Command("GO111MODULE=off", "go", "get", repo.name).Run()
 
 		if err != nil {
 			color.Red("Error occurred")
