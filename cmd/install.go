@@ -1,82 +1,19 @@
 package cmd
 
 import (
-	"bufio"
-	"os"
-	"os/exec"
-
-	"github.com/fatih/color"
+	"github.com/sawadashota/gorew/pkg"
+	"github.com/spf13/cobra"
 )
 
-type repository struct {
-	name string
-}
-
-type installResult struct {
-	success []repository
-	errors  []repository
-}
-
-func install(targetDir string) {
-	repositories := getRepos(targetDir)
-	result := execInstall(repositories)
-	result.stdoutErrors()
-}
-
-func execInstall(repositories []repository) *installResult {
-	var result installResult
-
-	for _, repo := range repositories {
-		color.Green("GO111MODULE=off go get %v", repo.name)
-		err := exec.Command("GO111MODULE=off", "go", "get", repo.name).Run()
-
+var installCmd = &cobra.Command{
+	Use:   "install",
+	Short: "Install Go CLI from .gorew",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		h, err := pkg.NewHandler()
 		if err != nil {
-			color.Red("Error occurred")
-			result.errors = append(result.errors, repo)
-			continue
+			return err
 		}
 
-		result.success = append(result.success, repo)
-	}
-
-	return &result
-}
-
-func (i *installResult) stdoutErrors() {
-	if len(i.errors) < 1 {
-		return
-	}
-
-	color.Red("*** Error List ***")
-
-	for _, repo := range i.errors {
-		color.Red(repo.name)
-	}
-}
-
-func getRepos(targetDir string) []repository {
-	var repositories []repository
-
-	if _, err := os.Stat(recordFilePath(targetDir)); err != nil {
-		panic(err)
-	}
-
-	file, err := os.Open(recordFilePath(targetDir))
-
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-
-	for scanner.Scan() {
-		repositories = append(repositories, repository{name: scanner.Text()})
-	}
-
-	if err = scanner.Err(); err != nil {
-		panic(err)
-	}
-
-	return repositories
+		return h.InstallAll()
+	},
 }
