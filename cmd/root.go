@@ -9,5 +9,5 @@ var RootCmd = &cobra.Command{
 }
 
 func init() {
-	RootCmd.AddCommand(installCmd)
+	RootCmd.AddCommand(installCmd, addCmd, removeCmd)
 }
