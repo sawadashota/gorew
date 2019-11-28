@@ -36,7 +36,7 @@ func (l *lockfile) List() ([]Package, error) {
 		if scanner.Text() == "" {
 			continue
 		}
-		pkgs = append(pkgs, newGoPackage(scanner.Text()))
+		pkgs = append(pkgs, NewGoPackage(scanner.Text()))
 	}
 
 	if err = scanner.Err(); err != nil {
@@ -69,10 +69,6 @@ func (l *lockfile) Add(pkg Package) error {
 
 	if exist {
 		return errors.Errorf("%s has already been added", pkg.Source())
-	}
-
-	if err := pkg.Install(); err != nil {
-		return err
 	}
 
 	file, err := os.OpenFile(l.path, os.O_APPEND|os.O_WRONLY, 0600)

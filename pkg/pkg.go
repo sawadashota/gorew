@@ -11,7 +11,7 @@ type GoPackage struct {
 	src string
 }
 
-func newGoPackage(src string) *GoPackage {
+func NewGoPackage(src string) *GoPackage {
 	return &GoPackage{src: src}
 }
 

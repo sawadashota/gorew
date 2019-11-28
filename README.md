@@ -1,7 +1,8 @@
 gorew
 ===
+ 
+Go CLI management tool
 
-Golang cli management tool.
 
 Usage
 ---
