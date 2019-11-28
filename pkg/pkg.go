@@ -1,6 +1,9 @@
 package pkg
 
-import "os/exec"
+import (
+	"os"
+	"os/exec"
+)
 
 type Package interface {
 	Install() error
@@ -16,7 +19,9 @@ func NewGoPackage(src string) *GoPackage {
 }
 
 func (gp *GoPackage) Install() error {
-	return exec.Command("GO111MODULE=off", "go", "get", gp.src).Run()
+	cmd := exec.Command("go", "get", gp.src)
+	cmd.Env = append(os.Environ(), "GO111MODULE=off")
+	return cmd.Run()
 }
 
 func (gp *GoPackage) Source() string {

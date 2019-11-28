@@ -47,6 +47,10 @@ func NewHandler(opts ...Option) (*Handler, error) {
 	return h, nil
 }
 
+func (h *Handler) List() ([]Package, error) {
+	return h.repo.List()
+}
+
 func (h *Handler) Add(p Package) error {
 	if err := p.Install(); err != nil {
 		return err
