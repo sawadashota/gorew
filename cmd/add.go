@@ -6,9 +6,10 @@ import (
 )
 
 var addCmd = &cobra.Command{
-	Use:   "add",
-	Short: "Add package",
-	Args:  cobra.ExactArgs(1),
+	Use:     "add",
+	Short:   "Add package",
+	Example: "gorew add github.com/some/package",
+	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		h, err := pkg.NewHandler()
 		if err != nil {

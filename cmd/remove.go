@@ -6,9 +6,10 @@ import (
 )
 
 var removeCmd = &cobra.Command{
-	Use:   "rm",
-	Short: "Remove package",
-	Args:  cobra.ExactArgs(1),
+	Use:     "rm",
+	Short:   "Remove package",
+	Example: "gorew rm github.com/some/package",
+	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		h, err := pkg.NewHandler()
 		if err != nil {

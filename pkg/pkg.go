@@ -7,6 +7,7 @@ import (
 
 type Package interface {
 	Install() error
+	Update() error
 	Source() string
 }
 
@@ -20,6 +21,12 @@ func NewGoPackage(src string) *GoPackage {
 
 func (gp *GoPackage) Install() error {
 	cmd := exec.Command("go", "get", gp.src)
+	cmd.Env = append(os.Environ(), "GO111MODULE=off")
+	return cmd.Run()
+}
+
+func (gp *GoPackage) Update() error {
+	cmd := exec.Command("go", "get", "-u", gp.src)
 	cmd.Env = append(os.Environ(), "GO111MODULE=off")
 	return cmd.Run()
 }

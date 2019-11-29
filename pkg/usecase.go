@@ -59,6 +59,27 @@ func (h *Handler) Add(p Package) error {
 	return h.repo.Add(p)
 }
 
+func (h *Handler) UpdateAll() error {
+	ps, err := h.repo.List()
+	if err != nil {
+		return err
+	}
+
+	for _, p := range ps {
+		_, _ = fmt.Fprintln(h.w, p.Source())
+		err = p.Update()
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (h *Handler) Update(p Package) error {
+	return p.Update()
+}
+
 func (h *Handler) Remove(p Package) error {
 	return h.repo.Remove(p)
 }
