@@ -1,3 +1,4 @@
 vendor/
 pprof/
 dist/
+pkg/testdata

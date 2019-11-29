@@ -1,37 +1,71 @@
-gorew
+Gorew
 ===
+ 
+Go CLI management tool.
+Execute simply `go get` command and record lockfile.
 
-Golang cli management tool.
 
 Usage
 ---
 
-### Initialization
+### Add Package
 
-Save golang cli to `~/.gorew` by compared `$GOPATH/bin/` and under `$GOPATH/src`.
-
-```bash
-gorew init [-b PATH_TO_BIN_IN_GOLANG] [-s PATH_TO_GO_SRC] [-f PATH_TO_SAVE_.gorew]
+```
+$ gorew add github.com/some/package
 ```
 
-### Install Cli
+### Update Package
 
-```bash
-gorew install [-f PATH_TO_.gorew]
 ```
+$ gorew update github.com/some/package
+```
+
+If you want to update all package, give no arguments.
+
+```
+$ gorew update
+```
+
+### Remove Package
+
+```
+$ gorew rm github.com/some/package
+```
+
+### List Packages
+
+```
+$ gorew list
+```
+
+
+### Install Packages from lockfile
+
+Install packages written in `.gorew`
+
+```
+$ gorew install
+```
+
+Environment Variables
+---
+
+### `GOREW_LOCKFILE_PATH`
+
+Path to `.gorew` file which is lockfile. Default is `~/.gorew`.
 
 Installation
 ---
 
-```bash
-brew tap sawadashota/homebrew-cheers
-brew install gorew
+```
+$ brew tap sawadashota/homebrew-cheers
+$ brew install gorew
 ```
 
 or
 
-```bash
-go get -u github.com/sawadashota/gorew
+```
+$ go get -u github.com/sawadashota/gorew
 ```
 
 License

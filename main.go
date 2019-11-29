@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/sawadashota/gorew/cmd"
-	"github.com/sawadashota/gorew/completion"
 )
 
 func main() {
-	_ = cmd.RootCmd.Execute()
-	completion.Run()
+	if err := cmd.RootCmd.Execute(); err != nil {
+		_, _ = fmt.Fprintln(os.Stdout, err)
+	}
 }

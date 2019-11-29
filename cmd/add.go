@@ -5,15 +5,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var installCmd = &cobra.Command{
-	Use:   "install",
-	Short: "Install Go CLI from .gorew",
+var addCmd = &cobra.Command{
+	Use:     "add",
+	Short:   "Add package",
+	Example: "gorew add github.com/some/package",
+	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		h, err := pkg.NewHandler()
 		if err != nil {
 			return err
 		}
 
-		return h.InstallAll()
+		src := args[0]
+		p := pkg.NewGoPackage(src)
+		return h.Add(p)
 	},
 }
